@@ -1,0 +1,37 @@
+def encrypt(text, shift):
+    encrypted_text = ""
+    for char in text:
+        if char.isalpha():  # Check if character is a letter
+            # Shift character within the bounds of A-Z or a-z
+            shifted = ord(char) + shift
+            if char.isupper():
+                if shifted > ord('Z'):
+                    shifted -= 26  # Wrap around if past 'Z'
+            elif char.islower():
+                if shifted > ord('z'):
+                    shifted -= 26  # Wrap around if past 'z'
+            encrypted_text += chr(shifted)  # Append shifted character
+        else:
+            encrypted_text += char  # Non-alphabetical characters remain unchanged
+    return encrypted_text
+
+def decrypt(text, shift):
+    return encrypt(text, -shift)  # Decrypting is just encrypting with a negative shift
+
+def main():
+    print("Caesar Cipher")
+    choice = input("Do you want to encrypt or decrypt? (e/d): ").lower()
+    message = input("Enter your message: ")
+    shift = int(input("Enter shift value: "))
+    
+    if choice == 'e':
+        encrypted_message = encrypt(message, shift)
+        print("Encrypted Message:", encrypted_message)
+    elif choice == 'd':
+        decrypted_message = decrypt(message, shift)
+        print("Decrypted Message:", decrypted_message)
+    else:
+        print("Invalid choice. Please select 'e' for encrypt or 'd' for decrypt.")
+
+if __name__ == "__main__":
+    main()
